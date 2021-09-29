@@ -25,5 +25,8 @@ namespace Scheduler
     {
         public static string GetRecurringTypeDescription(RecurringTypes Type)
             => new ResourceManager(typeof(Resources.Global)).GetString("RecurringTypes_" + (int)Type);
+
+        public static string GetRecurringTypeUnitDescription(RecurringTypes Type)
+            => new ResourceManager(typeof(Resources.Global)).GetString("RecurringTypesUnits_" + (int)Type);
     }
 }

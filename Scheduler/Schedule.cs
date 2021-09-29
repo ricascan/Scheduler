@@ -7,11 +7,14 @@ namespace Scheduler
         private ScheduleConfiguration _configuration;
         private ScheduleDateCalculator _calculator;
         public DateTime CurrentDate { get; set; }
+            
 
 
         public Schedule()
         {
-
+            this.Configuration.StartDate = new DateTime(DateTime.Now.Year, 1, 1);
+            this.Configuration.ScheduleType = ScheduleTypes.Once;
+            this.CurrentDate = DateTime.Now;
         }
 
         public Schedule(ScheduleConfiguration Configuration)
@@ -21,12 +24,12 @@ namespace Scheduler
 
         public ScheduleOutputData GetNextExecutionDate()
         {
-            if(this.DateInInterval(this.CurrentDate, this.configuration.StartDate, this.configuration.EndDate) == false)
+            if(this.DateInInterval(this.CurrentDate, this.Configuration.StartDate, this.Configuration.EndDate) == false)
             {
                 throw new ScheduleException("Current Date is out of the limits set");
             }
-            this.calculator.CalculateNextDateTime(this.CurrentDate, this.configuration);
-            if(this.DateInInterval(this.calculator.OutputData.OutputDateTime.Value, this.configuration.StartDate, this.configuration.EndDate) == false)
+            this.calculator.CalculateNextDateTime(this.CurrentDate, this.Configuration);
+            if(this.DateInInterval(this.calculator.OutputData.OutputDateTime.Value, this.Configuration.StartDate, this.Configuration.EndDate) == false)
             {
                 throw new ScheduleException("It is not possible to generate a execution date within the current date and limits set");
             }
@@ -35,7 +38,7 @@ namespace Scheduler
 
         
 
-        private ScheduleConfiguration configuration
+        public ScheduleConfiguration Configuration
         {
             get
             {

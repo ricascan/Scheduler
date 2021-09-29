@@ -88,6 +88,15 @@ namespace Scheduler.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Mounthly.
+        /// </summary>
+        internal static string RecurringTypes_4 {
+            get {
+                return ResourceManager.GetString("RecurringTypes_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Yearly.
         /// </summary>
         internal static string RecurringTypes_5 {
@@ -106,11 +115,56 @@ namespace Scheduler.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Mounthly.
+        ///   Busca una cadena traducida similar a Hour(s).
         /// </summary>
-        internal static string ReecurringTypes_4 {
+        internal static string RecurringTypesUnits_1 {
             get {
-                return ResourceManager.GetString("ReecurringTypes_4", resourceCulture);
+                return ResourceManager.GetString("RecurringTypesUnits_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Day(s).
+        /// </summary>
+        internal static string RecurringTypesUnits_2 {
+            get {
+                return ResourceManager.GetString("RecurringTypesUnits_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Week(s).
+        /// </summary>
+        internal static string RecurringTypesUnits_3 {
+            get {
+                return ResourceManager.GetString("RecurringTypesUnits_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Mounth(s).
+        /// </summary>
+        internal static string RecurringTypesUnits_4 {
+            get {
+                return ResourceManager.GetString("RecurringTypesUnits_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Year(s).
+        /// </summary>
+        internal static string RecurringTypesUnits_5 {
+            get {
+                return ResourceManager.GetString("RecurringTypesUnits_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Occurs every {0} {1}. Schedule will be used on {2} starting on {3}.
+        /// </summary>
+        internal static string ScheduleDescription {
+            get {
+                return ResourceManager.GetString("ScheduleDescription", resourceCulture);
             }
         }
     }

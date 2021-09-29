@@ -9,8 +9,6 @@ namespace Scheduler
     public class ScheduleDateCalculator
     {
         public ScheduleOutputData OutputData { get; private set; }
-        public DateTime? OutputDateTime { get; private set; }
-        public string OutputDescription { get; private set; }
         public void CalculateNextDateTime(DateTime CurrentDate, ScheduleConfiguration Configuration)
         {
             switch (Configuration.ScheduleType)
@@ -22,8 +20,9 @@ namespace Scheduler
                     this.OutputData = new ScheduleOutputData();
                     DateTime NextDate = this.CalculateNextDateTimeRecurring(CurrentDate, Configuration);
                     this.OutputData.OutputDateTime = NextDate;
-                    this.OutputData.OutputDescription = string.Format("Occurs every {0} {1}. Schedule will be used on {2} starting on {3}", 
-                        Configuration.Frequency, "Interval", NextDate, Configuration.StartDate.Value);
+                    this.OutputData.OutputDescription = string.Format(Resources.Global.ScheduleDescription, 
+                        Configuration.Frequency, EnumerationsDescriptionManager
+                            .GetRecurringTypeUnitDescription(Configuration.RecurringType.Value), NextDate, Configuration.StartDate.Value);
                     break;
                 default:
                     break;
