@@ -18,13 +18,14 @@ namespace Scheduler.Tests
             Schedule TestSchedule = new Schedule(TestConfiguration);
             TestSchedule.CurrentDate = DateTime.Now;
             DateTime ExpectedDateTime = DateTime.Now.AddMonths(5);
-            DateTime GeneratedExecutionDate = TestSchedule.GetNextExecutionDate();
-            Assert.Equal(ExpectedDateTime.Year, GeneratedExecutionDate.Year);
-            Assert.Equal(ExpectedDateTime.Month, GeneratedExecutionDate.Month);
-            Assert.Equal(ExpectedDateTime.Day, GeneratedExecutionDate.Day);
-            Assert.Equal(ExpectedDateTime.Hour, GeneratedExecutionDate.Hour);
-            Assert.Equal(ExpectedDateTime.Minute, GeneratedExecutionDate.Minute);
-            Assert.Equal(ExpectedDateTime.Second, GeneratedExecutionDate.Second);
+            DateTime? GeneratedExecutionDate = TestSchedule.GetNextExecutionDate().OutputDateTime;
+            Assert.NotNull(GeneratedExecutionDate);
+            Assert.Equal(ExpectedDateTime.Year, GeneratedExecutionDate.Value.Year);
+            Assert.Equal(ExpectedDateTime.Month, GeneratedExecutionDate.Value.Month);
+            Assert.Equal(ExpectedDateTime.Day, GeneratedExecutionDate.Value.Day);
+            Assert.Equal(ExpectedDateTime.Hour, GeneratedExecutionDate.Value.Hour);
+            Assert.Equal(ExpectedDateTime.Minute, GeneratedExecutionDate.Value.Minute);
+            Assert.Equal(ExpectedDateTime.Second, GeneratedExecutionDate.Value.Second);
         }
 
         [Fact]

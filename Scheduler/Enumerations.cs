@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,11 +14,16 @@ namespace Scheduler
     }
 
     public enum RecurringTypes
-    {      
+    {
         Hourly = 1,
         Daily = 2,
         Weekly = 3,
         Mounthly = 4,
         Yearly = 5
+    }
+    public static class EnumerationsDescriptionManager
+    {
+        public static string GetRecurringTypeDescription(RecurringTypes Type)
+            => new ResourceManager(typeof(Resources.Global)).GetString("RecurringTypes_" + (int)Type);
     }
 }
