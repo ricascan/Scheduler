@@ -22,7 +22,7 @@ namespace Scheduler
                     this.OutputData.OutputDateTime = NextDate;
                     this.OutputData.OutputDescription = string.Format(Resources.Global.ScheduleDescription, 
                         Configuration.Frequency, EnumerationsDescriptionManager
-                            .GetRecurringTypeUnitDescription(Configuration.RecurringType.Value), NextDate, Configuration.StartDate.Value);
+                            .GetRecurringTypeUnitDescription(Configuration.RecurringType), NextDate, Configuration.StartDate.Value);
                     break;
                 default:
                     break;
@@ -34,11 +34,11 @@ namespace Scheduler
         private DateTime CalculateNextDateTimeRecurring(DateTime CurrentDate, ScheduleConfiguration Configuration)
             => Configuration.RecurringType switch
             {
-                RecurringTypes.Hourly   => CurrentDate.AddHours(Configuration.Frequency.Value),
-                RecurringTypes.Daily    => CurrentDate.AddDays(Configuration.Frequency.Value),
-                RecurringTypes.Weekly   => CurrentDate.AddDays(7 * Configuration.Frequency.Value),
-                RecurringTypes.Mounthly => CurrentDate.AddMonths(Configuration.Frequency.Value),
-                RecurringTypes.Yearly   => CurrentDate.AddYears(Configuration.Frequency.Value),
+                RecurringTypes.Hourly   => CurrentDate.AddHours(Configuration.Frequency),
+                RecurringTypes.Daily    => CurrentDate.AddDays(Configuration.Frequency),
+                RecurringTypes.Weekly   => CurrentDate.AddDays(7 * Configuration.Frequency),
+                RecurringTypes.Mounthly => CurrentDate.AddMonths(Configuration.Frequency),
+                RecurringTypes.Yearly   => CurrentDate.AddYears(Configuration.Frequency),
                 _ => throw new ScheduleException("The recurring type is invalid"),
             };
     }

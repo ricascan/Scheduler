@@ -8,15 +8,15 @@ namespace Scheduler
 {
     public class ScheduleConfiguration
     {       
-        private RecurringTypes? recurringType;
+        private RecurringTypes recurringType;
         private DateTime? dateTime;
-        private int? frequency;
+        private int frequency;
 
         public ScheduleTypes ScheduleType { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public RecurringTypes? RecurringType
+        public RecurringTypes RecurringType
         {
             get => this.recurringType;
             set
@@ -42,7 +42,7 @@ namespace Scheduler
             }
         }
 
-        public int? Frequency
+        public int Frequency
         {
             get => this.frequency;
             set

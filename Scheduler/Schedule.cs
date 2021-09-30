@@ -13,7 +13,8 @@ namespace Scheduler
         public Schedule()
         {
             this.Configuration.StartDate = new DateTime(DateTime.Now.Year, 1, 1);
-            this.Configuration.ScheduleType = ScheduleTypes.Once;
+            this.Configuration.ScheduleType = ScheduleTypes.Recurring;
+            this.Configuration.RecurringType = RecurringTypes.Daily;
             this.CurrentDate = DateTime.Now;
         }
 

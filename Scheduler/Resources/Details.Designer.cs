@@ -22,14 +22,14 @@ namespace Scheduler.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Global {
+    public class Details {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Global() {
+        internal Details() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Scheduler.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Scheduler.Resources.Global", typeof(Global).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Scheduler.Resources.Details", typeof(Details).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,110 +61,74 @@ namespace Scheduler.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Hourly.
+        ///   Busca una cadena traducida similar a Current Date.
         /// </summary>
-        public static string RecurringTypes_1 {
+        public static string shl_CurrentDate {
             get {
-                return ResourceManager.GetString("RecurringTypes_1", resourceCulture);
+                return ResourceManager.GetString("shl_CurrentDate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Daily.
+        ///   Busca una cadena traducida similar a DateTime.
         /// </summary>
-        public static string RecurringTypes_2 {
+        public static string shl_DateTime {
             get {
-                return ResourceManager.GetString("RecurringTypes_2", resourceCulture);
+                return ResourceManager.GetString("shl_DateTime", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Weekly.
+        ///   Busca una cadena traducida similar a Description.
         /// </summary>
-        public static string RecurringTypes_3 {
+        public static string shl_Description {
             get {
-                return ResourceManager.GetString("RecurringTypes_3", resourceCulture);
+                return ResourceManager.GetString("shl_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Mounthly.
+        ///   Busca una cadena traducida similar a End Date.
         /// </summary>
-        public static string RecurringTypes_4 {
+        public static string shl_EndDate {
             get {
-                return ResourceManager.GetString("RecurringTypes_4", resourceCulture);
+                return ResourceManager.GetString("shl_EndDate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Yearly.
+        ///   Busca una cadena traducida similar a Every.
         /// </summary>
-        public static string RecurringTypes_5 {
+        public static string shl_Every {
             get {
-                return ResourceManager.GetString("RecurringTypes_5", resourceCulture);
+                return ResourceManager.GetString("shl_Every", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a The recurring type is invalid.
+        ///   Busca una cadena traducida similar a Next Execution Date.
         /// </summary>
-        public static string RecurringTypes_Invalid {
+        public static string shl_NextExecutionDate {
             get {
-                return ResourceManager.GetString("RecurringTypes_Invalid", resourceCulture);
+                return ResourceManager.GetString("shl_NextExecutionDate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Hour(s).
+        ///   Busca una cadena traducida similar a Occurs.
         /// </summary>
-        public static string RecurringTypesUnits_1 {
+        public static string shl_Occurs {
             get {
-                return ResourceManager.GetString("RecurringTypesUnits_1", resourceCulture);
+                return ResourceManager.GetString("shl_Occurs", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Day(s).
+        ///   Busca una cadena traducida similar a Start Date.
         /// </summary>
-        public static string RecurringTypesUnits_2 {
+        public static string shl_StartDate {
             get {
-                return ResourceManager.GetString("RecurringTypesUnits_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Week(s).
-        /// </summary>
-        public static string RecurringTypesUnits_3 {
-            get {
-                return ResourceManager.GetString("RecurringTypesUnits_3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Mounth(s).
-        /// </summary>
-        public static string RecurringTypesUnits_4 {
-            get {
-                return ResourceManager.GetString("RecurringTypesUnits_4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Year(s).
-        /// </summary>
-        public static string RecurringTypesUnits_5 {
-            get {
-                return ResourceManager.GetString("RecurringTypesUnits_5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Occurs every {0} {1}. Schedule will be used on {2} starting on {3}.
-        /// </summary>
-        public static string ScheduleDescription {
-            get {
-                return ResourceManager.GetString("ScheduleDescription", resourceCulture);
+                return ResourceManager.GetString("shl_StartDate", resourceCulture);
             }
         }
     }
