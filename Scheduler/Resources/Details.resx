@@ -141,4 +141,7 @@
   <data name="shl_StartDate" xml:space="preserve">
     <value>Start Date</value>
   </data>
+  <data name="shl_type" xml:space="preserve">
+    <value>Type</value>
+  </data>
 </root>

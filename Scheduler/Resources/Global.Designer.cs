@@ -61,6 +61,42 @@ namespace Scheduler.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Current date is out of the limits set.
+        /// </summary>
+        public static string CurrentDateOutLimits {
+            get {
+                return ResourceManager.GetString("CurrentDateOutLimits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Proposed date can not be less than current date.
+        /// </summary>
+        public static string DateTimeCanNotBeLessThanCurrentDate {
+            get {
+                return ResourceManager.GetString("DateTimeCanNotBeLessThanCurrentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Frequency must be greater than 0.
+        /// </summary>
+        public static string FrequencyMustBeGraterThanZero {
+            get {
+                return ResourceManager.GetString("FrequencyMustBeGraterThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a It is not possible to generate a execution date within the current date and limits set.
+        /// </summary>
+        public static string NotPossibleToGenerateExecDate {
+            get {
+                return ResourceManager.GetString("NotPossibleToGenerateExecDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Hourly.
         /// </summary>
         public static string RecurringTypes_1 {
@@ -160,11 +196,38 @@ namespace Scheduler.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Occurs every {0} {1}. Schedule will be used on {2} starting on {3}.
+        ///   Busca una cadena traducida similar a  Schedule will be used on {0} starting on {1}.
         /// </summary>
         public static string ScheduleDescription {
             get {
                 return ResourceManager.GetString("ScheduleDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Occurs once..
+        /// </summary>
+        public static string ScheduleDescriptionOccursOnce {
+            get {
+                return ResourceManager.GetString("ScheduleDescriptionOccursOnce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Occurs every {0} {1}..
+        /// </summary>
+        public static string ScheduleDescriptionOccursRecurring {
+            get {
+                return ResourceManager.GetString("ScheduleDescriptionOccursRecurring", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a End date must be grater than start date..
+        /// </summary>
+        public static string StartDateGreaterThanEndDate {
+            get {
+                return ResourceManager.GetString("StartDateGreaterThanEndDate", resourceCulture);
             }
         }
     }
