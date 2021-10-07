@@ -131,5 +131,14 @@ namespace Scheduler.Resources {
                 return ResourceManager.GetString("shl_StartDate", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Type.
+        /// </summary>
+        public static string shl_type {
+            get {
+                return ResourceManager.GetString("shl_type", resourceCulture);
+            }
+        }
     }
 }
