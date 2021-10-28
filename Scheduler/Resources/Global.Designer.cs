@@ -79,11 +79,74 @@ namespace Scheduler.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Days of week can not be repeated.
+        /// </summary>
+        public static string DaysOfWeekCanNotBeRepeated {
+            get {
+                return ResourceManager.GetString("DaysOfWeekCanNotBeRepeated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a End time can not be less than start time.
+        /// </summary>
+        public static string EndTimeCanNotBeLessStartTime {
+            get {
+                return ResourceManager.GetString("EndTimeCanNotBeLessStartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Frequency must be greater than 0.
         /// </summary>
         public static string FrequencyMustBeGraterThanZero {
             get {
                 return ResourceManager.GetString("FrequencyMustBeGraterThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a It is not possible to generate a representable execution date.
+        /// </summary>
+        public static string GeneratedDateTimeNotRepresentable {
+            get {
+                return ResourceManager.GetString("GeneratedDateTimeNotRepresentable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You must set at least one day of week when recurring type is weekly.
+        /// </summary>
+        public static string MustSetAtLeastOneDayWeek {
+            get {
+                return ResourceManager.GetString("MustSetAtLeastOneDayWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You must set a hourly frequency when start and end times are set.
+        /// </summary>
+        public static string MustSetHourlyFrequencyWhenStartEndTimes {
+            get {
+                return ResourceManager.GetString("MustSetHourlyFrequencyWhenStartEndTimes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You must set the start and end times when hourly frequency has a value.
+        /// </summary>
+        public static string MustSetStartEndTimesWhenFrequency {
+            get {
+                return ResourceManager.GetString("MustSetStartEndTimesWhenFrequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You must set the start time when end time is set and vice versa.
+        /// </summary>
+        public static string MustSetStartTimeWhenEndTimeIsSet {
+            get {
+                return ResourceManager.GetString("MustSetStartTimeWhenEndTimeIsSet", resourceCulture);
             }
         }
         
@@ -196,11 +259,20 @@ namespace Scheduler.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a  Schedule will be used on {0} starting on {1}.
+        ///   Busca una cadena traducida similar a schedule will be used on {0} starting on {1}..
         /// </summary>
         public static string ScheduleDescription {
             get {
                 return ResourceManager.GetString("ScheduleDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a every {0} hours between {1} and {2}, .
+        /// </summary>
+        public static string ScheduleDescriptionHourly {
+            get {
+                return ResourceManager.GetString("ScheduleDescriptionHourly", resourceCulture);
             }
         }
         
@@ -214,7 +286,7 @@ namespace Scheduler.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Occurs every {0} {1}..
+        ///   Busca una cadena traducida similar a Occurs every {0} {1}, .
         /// </summary>
         public static string ScheduleDescriptionOccursRecurring {
             get {
@@ -228,6 +300,15 @@ namespace Scheduler.Resources {
         public static string StartDateGreaterThanEndDate {
             get {
                 return ResourceManager.GetString("StartDateGreaterThanEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Time frequency configuration is not valid.
+        /// </summary>
+        public static string TimeFrequencyConfigurationIsNotValid {
+            get {
+                return ResourceManager.GetString("TimeFrequencyConfigurationIsNotValid", resourceCulture);
             }
         }
     }

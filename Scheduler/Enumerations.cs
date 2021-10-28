@@ -15,11 +15,8 @@ namespace Scheduler
 
     public enum RecurringTypes
     {
-        Hourly = 1,
         Daily = 2,
-        Weekly = 3,
-        Mounthly = 4,
-        Yearly = 5
+        Weekly = 3,        
     }
     public static class EnumerationsDescriptionManager
     {

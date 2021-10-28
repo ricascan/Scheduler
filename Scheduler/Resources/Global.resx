@@ -123,8 +123,29 @@
   <data name="DateTimeCanNotBeLessThanCurrentDate" xml:space="preserve">
     <value>Proposed date can not be less than current date</value>
   </data>
+  <data name="DaysOfWeekCanNotBeRepeated" xml:space="preserve">
+    <value>Days of week can not be repeated</value>
+  </data>
+  <data name="EndTimeCanNotBeLessStartTime" xml:space="preserve">
+    <value>End time can not be less than start time</value>
+  </data>
   <data name="FrequencyMustBeGraterThanZero" xml:space="preserve">
     <value>Frequency must be greater than 0</value>
+  </data>
+  <data name="GeneratedDateTimeNotRepresentable" xml:space="preserve">
+    <value>It is not possible to generate a representable execution date</value>
+  </data>
+  <data name="MustSetAtLeastOneDayWeek" xml:space="preserve">
+    <value>You must set at least one day of week when recurring type is weekly</value>
+  </data>
+  <data name="MustSetHourlyFrequencyWhenStartEndTimes" xml:space="preserve">
+    <value>You must set a hourly frequency when start and end times are set</value>
+  </data>
+  <data name="MustSetStartEndTimesWhenFrequency" xml:space="preserve">
+    <value>You must set the start and end times when hourly frequency has a value</value>
+  </data>
+  <data name="MustSetStartTimeWhenEndTimeIsSet" xml:space="preserve">
+    <value>You must set the start time when end time is set and vice versa</value>
   </data>
   <data name="NotPossibleToGenerateExecDate" xml:space="preserve">
     <value>It is not possible to generate a execution date within the current date and limits set</value>
@@ -163,15 +184,21 @@
     <value>The recurring type is invalid</value>
   </data>
   <data name="ScheduleDescription" xml:space="preserve">
-    <value> Schedule will be used on {0} starting on {1}</value>
+    <value>schedule will be used on {0} starting on {1}.</value>
+  </data>
+  <data name="ScheduleDescriptionHourly" xml:space="preserve">
+    <value>every {0} hours between {1} and {2}, </value>
   </data>
   <data name="ScheduleDescriptionOccursOnce" xml:space="preserve">
     <value>Occurs once.</value>
   </data>
   <data name="ScheduleDescriptionOccursRecurring" xml:space="preserve">
-    <value>Occurs every {0} {1}.</value>
+    <value>Occurs every {0} {1}, </value>
   </data>
   <data name="StartDateGreaterThanEndDate" xml:space="preserve">
     <value>End date must be grater than start date.</value>
+  </data>
+  <data name="TimeFrequencyConfigurationIsNotValid" xml:space="preserve">
+    <value>Time frequency configuration is not valid</value>
   </data>
 </root>

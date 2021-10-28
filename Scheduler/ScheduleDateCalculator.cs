@@ -1,60 +1,129 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scheduler
 {
     public class ScheduleDateCalculator
     {
         public ScheduleOutputData OutputData { get; private set; }
-        public void CalculateNextDateTime(DateTime CurrentDate, ScheduleConfiguration Configuration)
+        private ScheduleConfiguration configuration;
+        private ScheduleDescriptionGenerator descriptionGenerator;
+        public void CalculateNextDateTime(ScheduleConfiguration Configuration)
         {
+            this.configuration = Configuration;
+            this.OrderDaysOfWeek();
             this.OutputData = new ScheduleOutputData();
-            switch (Configuration.ScheduleType)
+            switch (this.configuration.ScheduleType)
             {
                 case ScheduleTypes.Once:
-                    this.OutputData.OutputDateTime = Configuration.DateTime;
-                    this.OutputData.OutputDescription = Resources.Global.ScheduleDescriptionOccursOnce
-                         + string.Format(Resources.Global.ScheduleDescription, this.OutputData.OutputDateTime, Configuration.StartDate);
+                    this.OutputData.OutputDateTime = this.configuration.DateTime;
                     break;
                 case ScheduleTypes.Recurring:
-                    DateTime NextDate;
                     try
                     {
-                        NextDate = this.CalculateNextDateTimeRecurring(CurrentDate, Configuration);
+                        this.OutputData.OutputDateTime = this.CalculateNextDateTimeRecurring();
                     }
-                    catch (ArgumentOutOfRangeException Ex)
+                    catch (ArgumentOutOfRangeException)
                     {
-                        throw new ScheduleException(Ex.Message);
+                        throw new ScheduleException(Resources.Global.GeneratedDateTimeNotRepresentable);
                     }
-                    this.OutputData.OutputDateTime = NextDate;
-                    this.OutputData.OutputDescription = string.Format(Resources.Global.ScheduleDescriptionOccursRecurring,
-                        Configuration.Frequency, EnumerationsDescriptionManager
-                            .GetRecurringTypeUnitDescription(Configuration.RecurringType))
-                            + string.Format(Resources.Global.ScheduleDescription, NextDate, Configuration.StartDate);
-                    break;
-                default:
                     break;
             }
+            this.GenerateOutputDescription();
+        }
+
+        private void GenerateOutputDescription()
+        {
+            this.descriptionGenerator = new ScheduleDescriptionGenerator();
+            this.OutputData.OutputDescription = this.descriptionGenerator
+                .GetScheduleDescription(this.configuration, this.OutputData.OutputDateTime.Value);
+        }
+
+        private void OrderDaysOfWeek()
+        {
+            if (this.configuration.DaysOfWeek != null)
+            {
+                this.configuration.DaysOfWeek = this.configuration.DaysOfWeek.OrderBy(D => (int)D).ToArray();
+            }
+        }
+        
+        private DateTime CalculateNextDateTimeRecurring()
+        {
+            DateTime? OutputDateTime = this.TryGetNextDateHourly();
+            if (OutputDateTime.HasValue == false)
+            {
+                OutputDateTime = this.configuration.RecurringType switch
+                {
+                    RecurringTypes.Daily => this.CalculateNextDateTimeDaily(),
+                    RecurringTypes.Weekly => this.CalculateNextDateTimeWeekly(),
+                    _ => throw new ScheduleException(Resources.Global.RecurringTypes_Invalid),
+                };
+            }
+            return OutputDateTime.Value;
+        }
+        private DateTime CalculateNextDateTimeDaily()
+        {
+            DateTime? OutputDateTime;
+
+            OutputDateTime = this.configuration.CurrentDate.Date
+                .AddDays(this.configuration.DailyFrequency)
+                .AddHours(this.configuration.StartTime?.TotalHours?? 0);
+
+            return OutputDateTime.Value;
+        }
+
+        private DateTime CalculateNextDateTimeWeekly()
+        {
+            DateTime? OutputDateTime;
+            DayOfWeek? NextDayOfWeek = this.configuration.DaysOfWeek.FirstOrDefault(D => (int)D > (int)this.configuration.CurrentDate.DayOfWeek);
+            if (NextDayOfWeek.Value == DayOfWeek.Sunday)
+            {
+                OutputDateTime = this.GetNextWeekday(this.configuration.CurrentDate, this.configuration.DaysOfWeek[0], this.configuration.DailyFrequency)
+                    .Date.AddHours(this.configuration.StartTime?.TotalHours ?? 0);
+            }
+            else
+            {
+                OutputDateTime = GetNextWeekday(this.configuration.CurrentDate, NextDayOfWeek.Value, 1).Date.AddHours(this.configuration.StartTime?.TotalHours ?? 0);
+            }         
+            return OutputDateTime.Value;
         }
 
 
-
-        private DateTime CalculateNextDateTimeRecurring(DateTime CurrentDate, ScheduleConfiguration Configuration)
-            => Configuration.RecurringType switch
+        private DateTime? TryGetNextDateHourly()
+        {
+            DateTime OutputDateTime = this.configuration.CurrentDate;
+            if (this.configuration.HourlyFrequency.HasValue
+                && OutputDateTime.TimeOfDay < this.configuration.EndTime)
             {
-                RecurringTypes.Hourly => CurrentDate.AddHours(Configuration.Frequency),
-                RecurringTypes.Daily => CurrentDate.AddDays(Configuration.Frequency),
-                RecurringTypes.Weekly => CurrentDate.AddDays(7 * Configuration.Frequency),
-                RecurringTypes.Mounthly => CurrentDate.AddMonths(Configuration.Frequency),
-                RecurringTypes.Yearly => CurrentDate.AddYears(Configuration.Frequency),
-                _ => throw new ScheduleException(Resources.Global.RecurringTypes_Invalid),
-            };
-
+                OutputDateTime = OutputDateTime.Date.AddHours(this.configuration.StartTime.Value.TotalHours);
+                while (OutputDateTime.TimeOfDay <= this.configuration.CurrentDate.TimeOfDay)
+                {
+                    OutputDateTime = OutputDateTime.AddHours(this.configuration.HourlyFrequency.Value);
+                }
+                if (OutputDateTime.Date == this.configuration.CurrentDate.Date
+                    && TimeInInterval(OutputDateTime.TimeOfDay, this.configuration.StartTime, this.configuration.EndTime))
+                {
+                    return OutputDateTime;
+                }               
+            }
+            return null;
+        }
+        private DateTime GetNextWeekday(DateTime start, DayOfWeek day, int WeeklyFrequency)
+        {
+            int daysToAdd = ((int)day - (int)start.DayOfWeek + (7)) % 7;
+            if(daysToAdd <= 0)
+            {
+                daysToAdd = 7;
+            }
+            daysToAdd = (WeeklyFrequency - 1) * 7 + daysToAdd;
+            return start.AddDays(daysToAdd);
+        }
         public static bool DateInInterval(DateTime Date, DateTime? StartDate, DateTime? EndDate)
             => (StartDate.HasValue == false || Date >= StartDate)
                 && (EndDate.HasValue == false || Date < EndDate);
+
+        public static bool TimeInInterval(TimeSpan Time, TimeSpan? StartTime, TimeSpan? EndTime)
+            => (StartTime.HasValue == false || Time >= StartTime)
+                && (EndTime.HasValue == false || Time < EndTime);
     }
 }
