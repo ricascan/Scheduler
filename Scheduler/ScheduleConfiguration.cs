@@ -10,7 +10,7 @@ namespace Scheduler
         public RecurringTypes RecurringType { get; set; } = RecurringTypes.Daily;
         public DateTime CurrentDate { get; set; } = DateTime.Now;
         public DateTime DateTime { get; set; } = DateTime.Now;
-        public int DailyFrequency { get; set; } = 1;
+        public int Frequency { get; set; } = 1;
         public TimeSpan? EndTime { get; set; }
         public TimeSpan? StartTime { get; set; }
         public int? HourlyFrequency { get; set; }

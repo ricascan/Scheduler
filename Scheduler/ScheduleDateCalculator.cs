@@ -66,7 +66,7 @@ namespace Scheduler
             DateTime? OutputDateTime;
 
             OutputDateTime = this.configuration.CurrentDate.Date
-                .AddDays(this.configuration.DailyFrequency)
+                .AddDays(this.configuration.Frequency)
                 .AddHours(this.configuration.StartTime?.TotalHours?? 0);
 
             return OutputDateTime.Value;
@@ -78,7 +78,7 @@ namespace Scheduler
             DayOfWeek? NextDayOfWeek = this.configuration.DaysOfWeek.FirstOrDefault(D => (int)D > (int)this.configuration.CurrentDate.DayOfWeek);
             if (NextDayOfWeek.Value == DayOfWeek.Sunday)
             {
-                OutputDateTime = this.GetNextWeekday(this.configuration.CurrentDate, this.configuration.DaysOfWeek[0], this.configuration.DailyFrequency)
+                OutputDateTime = this.GetNextWeekday(this.configuration.CurrentDate, this.configuration.DaysOfWeek[0], this.configuration.Frequency)
                     .Date.AddHours(this.configuration.StartTime?.TotalHours ?? 0);
             }
             else
@@ -101,28 +101,26 @@ namespace Scheduler
                     OutputDateTime = OutputDateTime.AddHours(this.configuration.HourlyFrequency.Value);
                 }
                 if (OutputDateTime.Date == this.configuration.CurrentDate.Date
-                    && TimeInInterval(OutputDateTime.TimeOfDay, this.configuration.StartTime, this.configuration.EndTime))
+                    && this.TimeInInterval(OutputDateTime.TimeOfDay, this.configuration.StartTime, this.configuration.EndTime))
                 {
                     return OutputDateTime;
                 }               
             }
             return null;
         }
-        private DateTime GetNextWeekday(DateTime start, DayOfWeek day, int WeeklyFrequency)
+        private DateTime GetNextWeekday(DateTime Start, DayOfWeek Day, int WeeklyFrequency)
         {
-            int daysToAdd = ((int)day - (int)start.DayOfWeek + (7)) % 7;
+            int daysToAdd = ((int)Day - (int)Start.DayOfWeek + (7)) % 7;
             if(daysToAdd <= 0)
             {
                 daysToAdd = 7;
             }
             daysToAdd = (WeeklyFrequency - 1) * 7 + daysToAdd;
-            return start.AddDays(daysToAdd);
+            return Start.AddDays(daysToAdd);
         }
-        public static bool DateInInterval(DateTime Date, DateTime? StartDate, DateTime? EndDate)
-            => (StartDate.HasValue == false || Date >= StartDate)
-                && (EndDate.HasValue == false || Date < EndDate);
+        
 
-        public static bool TimeInInterval(TimeSpan Time, TimeSpan? StartTime, TimeSpan? EndTime)
+        private bool TimeInInterval(TimeSpan Time, TimeSpan? StartTime, TimeSpan? EndTime)
             => (StartTime.HasValue == false || Time >= StartTime)
                 && (EndTime.HasValue == false || Time < EndTime);
     }

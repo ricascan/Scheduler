@@ -27,7 +27,7 @@ namespace Scheduler
         private void GenerateOutputDescriptionRecurring()
         {
             this.outputDescription = string.Format(Resources.Global.ScheduleDescriptionOccursRecurring,
-                                    this.configuration.DailyFrequency, EnumerationsDescriptionManager
+                                    this.configuration.Frequency, EnumerationsDescriptionManager
                                         .GetRecurringTypeUnitDescription(this.configuration.RecurringType))
                                         + ((this.configuration.RecurringType == RecurringTypes.Weekly) ? $"on the following days: {string.Join(", ", this.configuration.DaysOfWeek)}, " : "")
                                         + (this.configuration.HourlyFrequency.HasValue ?
