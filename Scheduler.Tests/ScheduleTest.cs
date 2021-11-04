@@ -17,9 +17,8 @@ namespace Scheduler.Tests
                 DateTime = new DateTime(2020, 1, 1, 15, 45, 0),
                 StartDate = new DateTime(2020, 1, 1)
             };
-            Schedule TestSchedule = new(TestConfiguration);
             DateTime ExpectedDateTime = new(2020, 1, 1, 15, 45, 0);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -38,10 +37,8 @@ namespace Scheduler.Tests
                 DateTime = new DateTime(2019, 1, 1, 15, 45, 0),
                 StartDate = new DateTime(2019, 1, 1)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(()
-                =>
-            { TestSchedule.GetNextExecutionDate(); });
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.DateTimeCanNotBeLessThanCurrentDate, Exception.Message);
         }
 
@@ -55,10 +52,8 @@ namespace Scheduler.Tests
                 EndDate = new DateTime(2018, 1, 1),
                 StartDate = new DateTime(2019, 1, 1)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(()
-                =>
-            { TestSchedule.GetNextExecutionDate(); });
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.StartDateGreaterThanEndDate, Exception.Message);
         }
 
@@ -73,10 +68,8 @@ namespace Scheduler.Tests
                 Frequency = -5,
                 StartDate = new DateTime(2020, 1, 1, 15, 30, 0)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(()
-                =>
-            { TestSchedule.GetNextExecutionDate(); });
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.FrequencyMustBeGraterThanZero, Exception.Message);
         }
 
@@ -95,8 +88,7 @@ namespace Scheduler.Tests
                 EndTime = new TimeSpan(8, 0, 0),
                 StartDate = new DateTime(2021, 5, 5, 1, 0, 0)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime ExpectedDateTime = new(2021, 5, 15, 4, 0, 0);
             string ExpectedDescription = "Occurs every 5 Day(s), every 2 hours between 04:00:00 and 08:00:00, schedule will be used on 15/05/2021 4:00:00 starting on 05/05/2021 1:00:00.";
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
@@ -119,8 +111,7 @@ namespace Scheduler.Tests
             };
             DateTime ExpectedDateTime = new(2021, 5, 15, 0, 0, 0);
             string ExpectedDescription = "Occurs every 5 Day(s), schedule will be used on 15/05/2021 0:00:00 starting on 05/05/2021 1:00:00.";
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -144,8 +135,7 @@ namespace Scheduler.Tests
             };
             DateTime ExpectedDateTime = new(2021, 5, 10, 4, 0, 0);
             string ExpectedDescription = "Occurs every 5 Day(s), every 2 hours between 04:00:00 and 08:00:00, schedule will be used on 10/05/2021 4:00:00 starting on 05/05/2021 1:00:00.";
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -171,8 +161,7 @@ namespace Scheduler.Tests
             DateTime ExpectedDateTime = new(2021, 5, 10, 4, 0, 0);
             string ExpectedDescription = "Occurs every 5 Week(s), on the following days: Monday, Friday, every 2 hours " +
                 "between 04:00:00 and 08:00:00, schedule will be used on 10/05/2021 4:00:00 starting on 05/05/2021 1:00:00.";
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -198,8 +187,7 @@ namespace Scheduler.Tests
             DateTime ExpectedDateTime = new(2021, 5, 14, 4, 0, 0);
             string ExpectedDescription = "Occurs every 5 Week(s), on the following days: Monday, Friday, every 2 hours " +
                "between 04:00:00 and 08:00:00, schedule will be used on 14/05/2021 4:00:00 starting on 05/05/2021 1:00:00.";
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -225,8 +213,7 @@ namespace Scheduler.Tests
             DateTime ExpectedDateTime = new(2021, 6, 14, 4, 0, 0);
             string ExpectedDescription = "Occurs every 5 Week(s), on the following days: Monday, Friday, every 2 hours " +
                 "between 04:00:00 and 08:00:00, schedule will be used on 14/06/2021 4:00:00 starting on 05/05/2021 1:00:00.";
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -254,8 +241,7 @@ namespace Scheduler.Tests
             DateTime ExpectedDateTime = new(2021, 6, 1, 4, 0, 0);
             string ExpectedDescription = "Occurs every 5 Week(s), on the following days: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, " +
                 "every 2 hours between 04:00:00 and 08:00:00, schedule will be used on 01/06/2021 4:00:00 starting on 05/05/2021 1:00:00.";
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -283,8 +269,7 @@ namespace Scheduler.Tests
             DateTime ExpectedDateTime = new(2021, 5, 31, 6, 0, 0);
             string ExpectedDescription = "Occurs every 5 Week(s), on the following days: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, " +
                 "every 2 hours between 04:00:00 and 08:00:00, schedule will be used on 31/05/2021 6:00:00 starting on 05/05/2021 1:00:00.";
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -309,8 +294,7 @@ namespace Scheduler.Tests
             DateTime ExpectedDateTime = new(2021, 6, 1, 0, 0, 0);
             string ExpectedDescription = "Occurs every 5 Week(s), on the following days: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, " +
                 "schedule will be used on 01/06/2021 0:00:00 starting on 05/05/2021 1:00:00.";
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -334,8 +318,7 @@ namespace Scheduler.Tests
             DateTime ExpectedDateTime = new(2021, 7, 4, 0, 0, 0);
             string ExpectedDescription = "Occurs every 5 Week(s), on the following days: Sunday, " +
                 "schedule will be used on 04/07/2021 0:00:00 starting on 05/05/2021 1:00:00.";
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleOutputData OutputData = TestSchedule.GetNextExecutionDate();
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
@@ -363,9 +346,8 @@ namespace Scheduler.Tests
                 Frequency = 5,
                 StartDate = new DateTime(2022, 1, 1, 15, 30, 0)
             };
-            Schedule TestSchedule = new(TestConfiguration);
             ScheduleException Exception =
-                Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.CurrentDateOutLimits, Exception.Message);
         }
 
@@ -381,9 +363,8 @@ namespace Scheduler.Tests
                 StartDate = new DateTime(2021, 1, 1, 15, 30, 0),
                 EndDate = new DateTime(2021, 2, 15, 15, 30, 0)
             };
-            Schedule TestSchedule = new(TestConfiguration);
             ScheduleException Exception =
-                Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.CurrentDateOutLimits, Exception.Message);
         }
         [Fact]
@@ -398,8 +379,8 @@ namespace Scheduler.Tests
                 StartDate = new DateTime(2021, 1, 1, 15, 30, 0),
                 EndDate = new DateTime(2021, 2, 16)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.NotPossibleToGenerateExecDate, Exception.Message);
         }
 
@@ -415,8 +396,8 @@ namespace Scheduler.Tests
                 StartDate = new DateTime(2021, 1, 1, 15, 30, 0),
                 EndDate = new DateTime(2021, 2, 16)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.MustSetAtLeastOneDayWeek, Exception.Message);
         }
 
@@ -433,8 +414,8 @@ namespace Scheduler.Tests
                 StartDate = new DateTime(2021, 1, 1, 15, 30, 0),
                 EndDate = new DateTime(2021, 2, 16)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.DaysOfWeekCanNotBeRepeated, Exception.Message);
         }
 
@@ -451,8 +432,8 @@ namespace Scheduler.Tests
                 StartDate = new DateTime(2021, 1, 1, 15, 30, 0),
                 EndDate = new DateTime(2021, 2, 16)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.MustSetStartEndTimesWhenFrequency, Exception.Message);
         }
         [Fact]
@@ -470,8 +451,8 @@ namespace Scheduler.Tests
                 StartDate = new DateTime(2021, 1, 1, 15, 30, 0),
                 EndDate = new DateTime(2021, 2, 16)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.EndTimeCanNotBeLessStartTime, Exception.Message);
         }
 
@@ -493,8 +474,8 @@ namespace Scheduler.Tests
                 StartDate = new DateTime(2021, 1, 1, 15, 30, 0),
                 EndDate = new DateTime(2021, 2, 16)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.TimeFrequencyConfigurationIsNotValid, Exception.Message);
         }
 
@@ -513,8 +494,8 @@ namespace Scheduler.Tests
                 StartDate = new DateTime(2021, 1, 1, 15, 30, 0),
                 EndDate = new DateTime(2021, 2, 16)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.MustSetHourlyFrequencyWhenStartEndTimes, Exception.Message);
         }
 
@@ -530,8 +511,8 @@ namespace Scheduler.Tests
                 Frequency = 5,
                 StartDate = new DateTime(2021, 1, 1, 15, 30, 0)
             };
-            Schedule TestSchedule = new(TestConfiguration);
-            ScheduleException Exception = Assert.Throws<ScheduleException>(() => TestSchedule.GetNextExecutionDate());
+            ScheduleException Exception =
+                Assert.Throws<ScheduleException>(() => TestConfiguration.GetNextExecutionDate());
             Assert.Equal(Resources.Global.GeneratedDateTimeNotRepresentable, Exception.Message);
         }
     }
