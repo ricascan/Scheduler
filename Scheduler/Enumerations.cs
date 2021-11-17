@@ -16,7 +16,31 @@ namespace Scheduler
     public enum RecurringTypes
     {
         Daily = 2,
-        Weekly = 3,        
+        Weekly = 3,
+        Monthly = 4
+    }
+
+    public enum MonthlyFirstOrderConfiguration
+    {
+        First = 1,
+        Second = 2,
+        Third = 3,
+        Fourth = 4,
+        Last = 31
+    }
+
+    public enum MonthlySecondOrdenConfiguration
+    {
+        Sunday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
+        Day = 7,
+        Weekday = 8,
+        WeekendDay = 9
     }
     public static class EnumerationsDescriptionManager
     {

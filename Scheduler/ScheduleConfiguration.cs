@@ -15,5 +15,8 @@ namespace Scheduler
         public TimeSpan? StartTime { get; set; }
         public int? HourlyFrequency { get; set; }
         public DayOfWeek[] DaysOfWeek { get; set; }
+        public int? DayOfMonth { get; set; }
+        public MonthlyFirstOrderConfiguration? MonthlyFirstOrderConfiguration { get; set; } = null;
+        public MonthlySecondOrdenConfiguration? MonthlySecondOrdenConfiguration { get; set; } = null;
     }
 }
