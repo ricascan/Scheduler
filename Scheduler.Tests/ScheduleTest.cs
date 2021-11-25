@@ -866,13 +866,39 @@ namespace Scheduler.Tests
                 ScheduleType = ScheduleTypes.Recurring,
                 RecurringType = RecurringTypes.Monthly,
                 DayOfMonth = 1,
-                Frequency = 5,
+                Frequency = 5,                
                 StartDate = new DateTime(2021, 5, 5, 1, 0, 0)
             };
             DateTime ExpectedDateTime = new(2022, 2, 1, 0, 0, 0);
             string ExpectedDescription = "Occurs every 5 Mounth(s), on day 1, " +
                 "schedule will be used on 01/02/2022 0:00:00 starting on 05/05/2021 1:00:00.";
             ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDate();
+            DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
+            Assert.NotNull(GeneratedExecutionDate);
+            AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);
+            Assert.Equal(ExpectedDescription, OutputData.OutputDescription);
+        }
+
+        [Fact]
+        public void Generated_execution_date_is_correct_monthly_6_series()
+        {
+            DateTime CurrentTime = new(2021, 9, 2, 4, 0, 0);
+            ScheduleConfiguration TestConfiguration = new()
+            {
+                CurrentDate = CurrentTime,
+                ScheduleType = ScheduleTypes.Recurring,
+                RecurringType = RecurringTypes.Monthly,
+                DayOfMonth = 1,
+                Frequency = 1,
+                StartTime = new TimeSpan(2, 0, 0),
+                EndTime = new TimeSpan(16, 0, 0),
+                HourlyFrequency = 4,
+                StartDate = new DateTime(2021, 5, 5, 1, 0, 0)
+            };
+            DateTime ExpectedDateTime = new(2021, 11, 1, 6, 0, 0);
+            string ExpectedDescription = "Occurs every 1 Mounth(s), on day 1, every 4 hours between 02:00:00 and 16:00:00, " +
+                "schedule will be used on 01/11/2021 6:00:00 starting on 05/05/2021 1:00:00.";
+            ScheduleOutputData OutputData = TestConfiguration.GetNextExecutionDateSeries(6);
             DateTime? GeneratedExecutionDate = OutputData.OutputDateTime;
             Assert.NotNull(GeneratedExecutionDate);
             AssertEqualDates(ExpectedDateTime, GeneratedExecutionDate.Value);

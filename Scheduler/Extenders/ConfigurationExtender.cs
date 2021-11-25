@@ -21,6 +21,17 @@ namespace Scheduler.Extenders
             return OutputData;
         }
 
+        public static ScheduleOutputData GetNextExecutionDateSeries(this ScheduleConfiguration Configuration, int NumberOfSeries)
+        {
+            ScheduleOutputData OutputData = null;
+            for(int i = 0; i < NumberOfSeries; i++)
+            {
+                OutputData = Configuration.GetNextExecutionDate();
+                Configuration.CurrentDate = OutputData.OutputDateTime.Value;
+            }
+            return OutputData;
+        }
+
         public static void OrderDaysOfWeek(this ScheduleConfiguration Configuration)
         {
             if (Configuration.DaysOfWeek != null)
