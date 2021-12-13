@@ -1,4 +1,5 @@
 ﻿using Scheduler.Extenders;
+using Scheduler.Resources;
 using System;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace Scheduler
 {
     public class ScheduleDateCalculator
     {
-        public ScheduleOutputData CalculateNextDateTime(ScheduleConfiguration Configuration)
+        public ScheduleOutputData CalculateNextDateTime(Scheduler Configuration)
         {
             Configuration.OrderDaysOfWeek();
             ScheduleOutputData OutputData = new();
@@ -22,7 +23,7 @@ namespace Scheduler
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        throw new ScheduleException(Resources.Global.GeneratedDateTimeNotRepresentable);
+                        throw new ScheduleException(SchedulerResourcesManager.GetResource("GeneratedDateTimeNotRepresentable"));
                     }
                     break;
             }
@@ -31,10 +32,10 @@ namespace Scheduler
             return OutputData;
         }
 
-        private static string GenerateOutputDescription(ScheduleConfiguration Configuration, DateTime OutputDateTime) =>
+        private static string GenerateOutputDescription(Scheduler Configuration, DateTime OutputDateTime) =>
             new ScheduleDescriptionGenerator().GetScheduleDescription(Configuration, OutputDateTime);
 
-        private static DateTime CalculateNextDateTimeRecurring(ScheduleConfiguration Configuration)
+        private static DateTime CalculateNextDateTimeRecurring(Scheduler Configuration)
         {
             DateTime? OutputDateTime = TryGetNextDateHourly(Configuration);
             if (OutputDateTime.HasValue == false)
@@ -44,13 +45,13 @@ namespace Scheduler
                     RecurringTypes.Daily => CalculateNextDateTimeDaily(Configuration),
                     RecurringTypes.Weekly => CalculateNextDateTimeWeekly(Configuration),
                     RecurringTypes.Monthly => CalculateNextDateTimeMonthly(Configuration),
-                    _ => throw new ScheduleException(Resources.Global.RecurringTypes_Invalid),
+                    _ => throw new ScheduleException(SchedulerResourcesManager.GetResource("RecurringTypes_Invalid")),
                 };
-                OutputDateTime = OutputDateTime.Value.Date.AddHours(Configuration.StartTime?.TotalHours ?? 0);
+                OutputDateTime = OutputDateTime.Value.Date.AddHours(Configuration.StartTime?.TimeOfDay.TotalHours ?? 0);
             }
             return OutputDateTime.Value;
         }
-        private static DateTime CalculateNextDateTimeDaily(ScheduleConfiguration Configuration)
+        private static DateTime CalculateNextDateTimeDaily(Scheduler Configuration)
         {
             DateTime? OutputDateTime;
 
@@ -60,7 +61,7 @@ namespace Scheduler
             return OutputDateTime.Value;
         }
 
-        private static DateTime CalculateNextDateTimeWeekly(ScheduleConfiguration Configuration)
+        private static DateTime CalculateNextDateTimeWeekly(Scheduler Configuration)
         {
             DateTime? OutputDateTime;
             DayOfWeek? NextDayOfWeek = Configuration.DaysOfWeek.FirstOrDefault(D => (int)D > (int)Configuration.CurrentDate.DayOfWeek);
@@ -75,7 +76,7 @@ namespace Scheduler
             return OutputDateTime.Value;
         }
 
-        private static DateTime CalculateNextDateTimeMonthly(ScheduleConfiguration Configuration)
+        private static DateTime CalculateNextDateTimeMonthly(Scheduler Configuration)
         {
             DateTime? OutputDateTime;
             if (Configuration.DayOfMonth != null)
@@ -89,7 +90,7 @@ namespace Scheduler
             return OutputDateTime.Value;
         }
 
-        private static DateTime? CalculateDateTimeDayOfMonth(ScheduleConfiguration Configuration)
+        private static DateTime? CalculateDateTimeDayOfMonth(Scheduler Configuration)
         {
             int DayInMonth;
             DateTime? OutputDateTime;
@@ -110,7 +111,7 @@ namespace Scheduler
             return OutputDateTime;
         }
 
-        private static int GetNormalizedDayInMonth(ScheduleConfiguration Configuration, int Year, int Mounth)
+        private static int GetNormalizedDayInMonth(Scheduler Configuration, int Year, int Mounth)
         {
             int DayInMonth = Configuration.DayOfMonth.Value;
             int DaysInMonth = DateTime.DaysInMonth(Configuration.CurrentDate.Year, Configuration.CurrentDate.Month);
@@ -122,7 +123,7 @@ namespace Scheduler
             return DayInMonth;
         }
 
-        private static DateTime? CalculateDateTimeMonthlyDays(ScheduleConfiguration Configuration)
+        private static DateTime? CalculateDateTimeMonthlyDays(Scheduler Configuration)
         {
             int Offset = 0;
             int ExecutionFrequency = (int)Configuration.MonthlyFirstOrderConfiguration;
@@ -150,7 +151,7 @@ namespace Scheduler
             }
         }
       
-        private static DateTime? FindMonthWeekDay(int Year, int Month, int Offset, MonthlySecondOrdenConfiguration Configuration)
+        private static DateTime? FindMonthWeekDay(int Year, int Month, int Offset, MonthlySecondOrderConfiguration Configuration)
         {
             if(Offset > DateTime.DaysInMonth(Year, Month)) { return null; }
             if (Offset < 1)
@@ -159,9 +160,9 @@ namespace Scheduler
             }
             Func<DayOfWeek, bool> Condition = Configuration switch
             {
-                MonthlySecondOrdenConfiguration.Day => _ => true,
-                MonthlySecondOrdenConfiguration.Weekday => Day => Day != DayOfWeek.Saturday && Day != DayOfWeek.Sunday,
-                MonthlySecondOrdenConfiguration.WeekendDay => Day => Day == DayOfWeek.Saturday || Day == DayOfWeek.Sunday,
+                MonthlySecondOrderConfiguration.Day => _ => true,
+                MonthlySecondOrderConfiguration.Weekday => Day => Day != DayOfWeek.Saturday && Day != DayOfWeek.Sunday,
+                MonthlySecondOrderConfiguration.WeekendDay => Day => Day == DayOfWeek.Saturday || Day == DayOfWeek.Sunday,
                 _ => Day => Day == (DayOfWeek)Configuration
             };
             DateTime Moment = new(Year, Month, 1);
@@ -182,7 +183,7 @@ namespace Scheduler
         }
 
 
-        private static DateTime? TryGetNextDateHourly(ScheduleConfiguration Configuration)
+        private static DateTime? TryGetNextDateHourly(Scheduler Configuration)
         {
             if(Configuration.CurrentDayIsValid() == false)
             {
@@ -191,15 +192,15 @@ namespace Scheduler
             DateTime OutputDateTime = Configuration.CurrentDate;
             
             if (Configuration.HourlyFrequency.HasValue
-                && OutputDateTime.TimeOfDay < Configuration.EndTime)
+                && OutputDateTime.TimeOfDay < Configuration.EndTime.Value.TimeOfDay)
             {
-                OutputDateTime = OutputDateTime.Date.AddHours(Configuration.StartTime.Value.TotalHours);
+                OutputDateTime = OutputDateTime.Date.AddHours(Configuration.StartTime.Value.TimeOfDay.TotalHours);
                 while (OutputDateTime.TimeOfDay <= Configuration.CurrentDate.TimeOfDay)
                 {
                     OutputDateTime = OutputDateTime.AddHours(Configuration.HourlyFrequency.Value);
                 }
                 if (OutputDateTime.Date == Configuration.CurrentDate.Date
-                    && OutputDateTime.TimeOfDay.IsInInterval(Configuration.StartTime, Configuration.EndTime))
+                    && OutputDateTime.TimeOfDay.IsInInterval(Configuration.StartTime?.TimeOfDay, Configuration.EndTime?.TimeOfDay))
                 {
                     return OutputDateTime;
                 }

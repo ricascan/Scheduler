@@ -29,7 +29,7 @@ namespace Scheduler
         Last = 31
     }
 
-    public enum MonthlySecondOrdenConfiguration
+    public enum MonthlySecondOrderConfiguration
     {
         Sunday = 0,
         Monday = 1,
@@ -41,13 +41,5 @@ namespace Scheduler
         Day = 7,
         Weekday = 8,
         WeekendDay = 9
-    }
-    public static class EnumerationsDescriptionManager
-    {
-        public static string GetRecurringTypeDescription(RecurringTypes Type)
-            => new ResourceManager(typeof(Resources.Global)).GetString("RecurringTypes_" + (int)Type);
-
-        public static string GetRecurringTypeUnitDescription(RecurringTypes Type)
-            => new ResourceManager(typeof(Resources.Global)).GetString("RecurringTypesUnits_" + (int)Type);
     }
 }
