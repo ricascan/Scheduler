@@ -2908,7 +2908,7 @@ namespace Scheduler.Tests
         }
 
         [Fact]
-        public void Generated_execution_date_is_correct_daily_6_series_en_GB()
+        public void Generated_execution_date_is_correct_daily_hourly_6_series_en_GB()
         {
             Scheduler TestConfiguration = new()
             {
@@ -2947,7 +2947,7 @@ namespace Scheduler.Tests
         }
 
         [Fact]
-        public void Generated_execution_date_is_correct_daily_6_series_es_ES()
+        public void Not_supported_culture_returns_english_resource()
         {
             Scheduler TestConfiguration = new()
             {
@@ -2959,13 +2959,12 @@ namespace Scheduler.Tests
                 EndTime = new DateTime(1, 1, 1, 16, 0, 0),
                 HourlyFrequency = 4,
                 StartDate = new DateTime(2021, 5, 5, 1, 0, 0),
-                Language = "es-ES"
+                Language = "fr-FR"
             };
 
             ScheduleOutputData[] Outputs = TestConfiguration.GetNextExecutionDateSeries(6);
-            string ExpectedDescriptionBase = "Ocurre cada 1 Día(s), cada 4 horas, " +
-                "entre las 2:00:00 y las 16:00:00, " +
-                "la próxima fecha de ejecución será {0}, empezando el 5/5/2021 1:00:00.";
+            string ExpectedDescriptionBase = "Occurs every 1 Day(s), every 4 hours between 02:00:00 and 16:00:00, " +
+                "schedule will be used on {0} starting on 05/05/2021 01:00:00.";
             string ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[0].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
             AssertEqualDates(new DateTime(2021, 9, 2, 6, 0, 0), Outputs[0].OutputDateTime.Value);
             Assert.Equal(ExpectedDescription, Outputs[0].OutputDescription);
@@ -2987,7 +2986,115 @@ namespace Scheduler.Tests
         }
 
         [Fact]
+        public void Generated_execution_date_is_correct_daily_6_series_en_GB()
+        {
+            Scheduler TestConfiguration = new()
+            {
+                CurrentDate = new(2021, 9, 2, 4, 0, 0),
+                ScheduleType = ScheduleTypes.Recurring,
+                RecurringType = RecurringTypes.Daily,
+                Frequency = 1,
+                StartDate = new DateTime(2021, 5, 5, 1, 0, 0),
+                Language = "en-GB"
+            };
+
+            ScheduleOutputData[] Outputs = TestConfiguration.GetNextExecutionDateSeries(6);
+            string ExpectedDescriptionBase = "Occurs every 1 Day(s), " +
+                "schedule will be used on {0} starting on 05/05/2021 01:00:00.";
+            string ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[0].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 3, 0, 0, 0), Outputs[0].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[0].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[1].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 4, 0, 0, 0), Outputs[1].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[1].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[2].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 5, 0, 0, 0), Outputs[2].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[2].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[3].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 6, 0, 0, 0), Outputs[3].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[3].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[4].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 7, 0, 0, 0), Outputs[4].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[4].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[5].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 8, 0, 0, 0), Outputs[5].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[5].OutputDescription);
+        }
+
+        [Fact]
         public void Generated_execution_date_is_correct_daily_6_series_en_US()
+        {
+            Scheduler TestConfiguration = new()
+            {
+                CurrentDate = new(2021, 9, 2, 4, 0, 0),
+                ScheduleType = ScheduleTypes.Recurring,
+                RecurringType = RecurringTypes.Daily,
+                Frequency = 1,
+                StartDate = new DateTime(2021, 5, 5, 1, 0, 0),
+                Language = "en-US"
+            };
+
+            ScheduleOutputData[] Outputs = TestConfiguration.GetNextExecutionDateSeries(6);
+            string ExpectedDescriptionBase = "Occurs every 1 Day(s), " +
+                "schedule will be used on {0} starting on 5/5/2021 1:00:00 AM.";
+            string ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[0].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 3, 0, 0, 0), Outputs[0].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[0].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[1].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 4, 0, 0, 0), Outputs[1].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[1].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[2].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 5, 0, 0, 0), Outputs[2].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[2].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[3].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 6, 0, 0, 0), Outputs[3].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[3].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[4].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 7, 0, 0, 0), Outputs[4].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[4].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[5].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 8, 0, 0, 0), Outputs[5].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[5].OutputDescription);
+        }
+
+        [Fact]
+        public void Generated_execution_date_is_correct_daily_6_series_es_ES()
+        {
+            Scheduler TestConfiguration = new()
+            {
+                CurrentDate = new(2021, 9, 2, 4, 0, 0),
+                ScheduleType = ScheduleTypes.Recurring,
+                RecurringType = RecurringTypes.Daily,
+                Frequency = 1,
+                StartDate = new DateTime(2021, 5, 5, 1, 0, 0),
+                Language = "es-ES"
+            };
+
+            ScheduleOutputData[] Outputs = TestConfiguration.GetNextExecutionDateSeries(6);
+            string ExpectedDescriptionBase = "Ocurre cada 1 Día(s), " +
+                "la próxima fecha de ejecución será {0}, empezando el 5/5/2021 1:00:00.";
+            string ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[0].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 3, 0, 0, 0), Outputs[0].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[0].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[1].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 4, 0, 0, 0), Outputs[1].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[1].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[2].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 5, 0, 0, 0), Outputs[2].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[2].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[3].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 6, 0, 0, 0), Outputs[3].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[3].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[4].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 7, 0, 0, 0), Outputs[4].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[4].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[5].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 8, 0, 0, 0), Outputs[5].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[5].OutputDescription);
+        }
+
+        [Fact]
+        public void Generated_execution_date_is_correct_daily_hourly_6_series_en_US()
         {
             Scheduler TestConfiguration = new()
             {
@@ -3025,7 +3132,45 @@ namespace Scheduler.Tests
             Assert.Equal(ExpectedDescription, Outputs[5].OutputDescription);
         }
 
-        
+        [Fact]
+        public void Generated_execution_date_is_correct_daily_hourly_6_series_es_ES()
+        {
+            Scheduler TestConfiguration = new()
+            {
+                CurrentDate = new(2021, 9, 2, 4, 0, 0),
+                ScheduleType = ScheduleTypes.Recurring,
+                RecurringType = RecurringTypes.Daily,
+                Frequency = 1,
+                StartTime = new DateTime(1, 1, 1, 2, 0, 0),
+                EndTime = new DateTime(1, 1, 1, 16, 0, 0),
+                HourlyFrequency = 4,
+                StartDate = new DateTime(2021, 5, 5, 1, 0, 0),
+                Language = "es-ES"
+            };
+
+            ScheduleOutputData[] Outputs = TestConfiguration.GetNextExecutionDateSeries(6);
+            string ExpectedDescriptionBase = "Ocurre cada 1 Día(s), cada 4 horas, " +
+                "entre las 2:00:00 y las 16:00:00, " +
+                "la próxima fecha de ejecución será {0}, empezando el 5/5/2021 1:00:00.";
+            string ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[0].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 2, 6, 0, 0), Outputs[0].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[0].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[1].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 2, 10, 0, 0), Outputs[1].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[1].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[2].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 2, 14, 0, 0), Outputs[2].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[2].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[3].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 3, 2, 0, 0), Outputs[3].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[3].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[4].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 3, 6, 0, 0), Outputs[4].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[4].OutputDescription);
+            ExpectedDescription = string.Format(ExpectedDescriptionBase, Outputs[5].OutputDateTime.Value.ToString("G", CultureInfo.GetCultureInfo(TestConfiguration.Language)));
+            AssertEqualDates(new DateTime(2021, 9, 3, 10, 0, 0), Outputs[5].OutputDateTime.Value);
+            Assert.Equal(ExpectedDescription, Outputs[5].OutputDescription);
+        }
 
 
         private static void AssertEqualDates(DateTime ExpectedDateTime, DateTime GeneratedExecutionDate)

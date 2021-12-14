@@ -268,10 +268,22 @@ namespace Scheduler.Resources
             };
         }
 
-        public static string GetResource(string ResourceCode) => resources[ResourceCode][culture.Name.Split('-')[0]];
+        public static string GetResource(string ResourceCode)
+        {
+            string text;
+            try
+            {
+                text = resources[ResourceCode][culture.Name.Split('-')[0]];
+            }
+            catch (KeyNotFoundException)
+            {
+                text = resources[ResourceCode][englishLanguage];
+            }
+            return text;
+        }
 
         public static string GetRecurringTypeUnitDescription(RecurringTypes Type)
-            => resources[("RecurringTypesUnits_" + (int)Type)][culture.Name.Split('-')[0]];
+            => GetResource("RecurringTypesUnits_" + (int)Type);
 
         public static string FormatDateTime(DateTime DateTime)
         {
@@ -289,11 +301,11 @@ namespace Scheduler.Resources
             {
                 return culture.DateTimeFormat.GetDayName((DayOfWeek)SecondOrdenConfiguration);
             }
-            return resources[("SecondOrderConfig_" + (int)SecondOrdenConfiguration)][culture.Name.Split('-')[0]];
+            return GetResource("SecondOrderConfig_" + (int)SecondOrdenConfiguration);
         }
 
         public static string GetFirstOrderConfigurationResource(MonthlyFirstOrderConfiguration FirstOrdenConfiguration) 
-            => resources[("FirstOrderConfig_" + (int)FirstOrdenConfiguration)][culture.Name.Split('-')[0]];
+            => GetResource("FirstOrderConfig_" + (int)FirstOrdenConfiguration);
 
         public static string[] GetDaysOfWeekResources(DayOfWeek[] Days)
         {

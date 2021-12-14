@@ -8,19 +8,6 @@ namespace Scheduler.Extenders
 {
     public static class DateTimeExtender
     {
-        public static int GetWeekNumberInMonth(this DateTime Date)
-        {
-            Date = Date.Date;
-            DateTime FirstMonthDay = new DateTime(Date.Year, Date.Month, 1);
-            DateTime FirstMonthMonday = FirstMonthDay.AddDays((DayOfWeek.Monday + 7 - FirstMonthDay.DayOfWeek) % 7);
-            if (FirstMonthMonday > Date)
-            {
-                FirstMonthDay = FirstMonthDay.AddMonths(-1);
-                FirstMonthMonday = FirstMonthDay.AddDays((DayOfWeek.Monday + 7 - FirstMonthDay.DayOfWeek) % 7);
-            }
-            return (Date - FirstMonthMonday).Days / 7 + 1;
-        }
-
         public static DateTime GetNextWeekday(this DateTime Start, DayOfWeek Day, int WeeklyFrequency)
         {
             int daysToAdd = ((int)Day - (int)Start.DayOfWeek + (7)) % 7;

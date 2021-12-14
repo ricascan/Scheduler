@@ -8,10 +8,5 @@ namespace Scheduler
         {
 
         }
-
-        public ScheduleException() : base()
-        {
-
-        }
     }
 }
